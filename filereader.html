@@ -30,6 +30,10 @@
 <span class="readBytesButtons">
   <button>Read JSON File</button>
 </span>
+<span id="container" class="readBytesButtons">
+  <button >Export JSON</button>
+</span>
+
 <div id="root" value="root">
 
 </div>
@@ -37,6 +41,7 @@
 
 <script>
     var root = document.querySelector('#root');
+
 
     function createObjProps(elem){
         var obj = {}
@@ -126,8 +131,15 @@
                 //document.getElementById('byte_content').textContent = evt.target.result;
                    var treeObj = JSON.parse(decodeURIComponent(evt.target.result));
                    console.clear();
-                   console.dir(treeObj);
+                   console.log("test",treeObj);
                    createTreeRecurse(root, treeObj, 0);
+
+                   $(function(){
+                       var data = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(treeObj));
+                       console.log(data);
+                       $('<a href="data:' + data + '" download="data.json">download JSON</a>').appendTo('#container');
+                   })
+
             }
         };
 
@@ -144,6 +156,8 @@
 
 
     });
+
+
 </script>
 </body>
 </html>
